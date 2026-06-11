@@ -20,26 +20,28 @@ LOTS_PER_TRADE = 1
 CANDLE_TIMEFRAME = 3
 
 # ============================================
-# CALL OPTION SPECIFIC SETTINGS
+# OPTION TYPE SETTINGS (CALL & PUT)
 # ============================================
-OPTION_TYPE = "CE"  # CE = Call European, PE = Put European
-STRIKE_OFFSET = 0   # 0 = ATM (At The Money), -1 = 1 strike OTM, +1 = 1 strike ITM
+CALL_OPTION_TYPE = "CE"  # Call European
+PUT_OPTION_TYPE = "PE"   # Put European
+STRIKE_OFFSET = 0        # 0 = ATM (At The Money)
 
 # Strike interval (depends on index)
-NIFTY_STRIKE_INTERVAL = 50      # NIFTY strikes in multiples of 50 (23000, 23050, etc)
-BANKNIFTY_STRIKE_INTERVAL = 100 # BANKNIFTY strikes in multiples of 100 (47000, 47100, etc)
+NIFTY_STRIKE_INTERVAL = 50      # NIFTY strikes: 23000, 23050, etc
+BANKNIFTY_STRIKE_INTERVAL = 100 # BANKNIFTY strikes: 47000, 47100, etc
 
 # ============================================
 # STRATEGY PARAMETERS
 # ============================================
 EMA_FAST = 9
 EMA_SLOW = 15
-ANGLE_THRESHOLD = 30
+ANGLE_THRESHOLD = 30  # Both upward and downward
+
 VOLUME_LOOKBACK = 7
 VOLUME_MULTIPLIER = 1.2
 
 # ============================================
-# CALL OPTION RISK MANAGEMENT
+# OPTION RISK MANAGEMENT
 # ============================================
 RISK_REWARD_RATIO = 3
 
@@ -47,11 +49,13 @@ RISK_REWARD_RATIO = 3
 DAYS_TO_EXPIRY_MIN = 3  # Don't trade if expiry < 3 days
 DAYS_TO_EXPIRY_MAX = 10 # Don't trade if expiry > 10 days
 
-# Take profit: Exit when option value increases by X%
+# CALL OPTION: Buy when 9 EMA > 15 EMA (BULLISH + 30° UP angle)
 CALL_OPTION_PROFIT_TARGET_PCT = 50  # Exit at 50% profit
+CALL_OPTION_STOP_LOSS_PCT = 30      # Exit at 30% loss
 
-# Stop loss: Exit when option value decreases by X%
-CALL_OPTION_STOP_LOSS_PCT = 30  # Exit at 30% loss
+# PUT OPTION: Buy when 9 EMA < 15 EMA (BEARISH + 30° DOWN angle)
+PUT_OPTION_PROFIT_TARGET_PCT = 50   # Exit at 50% profit
+PUT_OPTION_STOP_LOSS_PCT = 30       # Exit at 30% loss
 
 # ============================================
 # MARKET HOURS (IST)
