@@ -10,13 +10,24 @@ ACCESS_TOKEN = "your_access_token_here"  # GET FROM ZERODHA DASHBOARD
 # ============================================
 TRADING_SYMBOLS = ["NIFTY", "BANKNIFTY"]
 
+# CURRENT LOT SIZES (Updated 2024)
 LOT_SIZES = {
-    "NIFTY": 50,
-    "BANKNIFTY": 20
+    "NIFTY": 65,           # Updated: 65 units per lot
+    "BANKNIFTY": 30        # Updated: 30 units per lot
 }
 
 LOTS_PER_TRADE = 1
 CANDLE_TIMEFRAME = 3
+
+# ============================================
+# CALL OPTION SPECIFIC SETTINGS
+# ============================================
+OPTION_TYPE = "CE"  # CE = Call European, PE = Put European
+STRIKE_OFFSET = 0   # 0 = ATM (At The Money), -1 = 1 strike OTM, +1 = 1 strike ITM
+
+# Strike interval (depends on index)
+NIFTY_STRIKE_INTERVAL = 50      # NIFTY strikes in multiples of 50 (23000, 23050, etc)
+BANKNIFTY_STRIKE_INTERVAL = 100 # BANKNIFTY strikes in multiples of 100 (47000, 47100, etc)
 
 # ============================================
 # STRATEGY PARAMETERS
@@ -28,9 +39,19 @@ VOLUME_LOOKBACK = 7
 VOLUME_MULTIPLIER = 1.2
 
 # ============================================
-# RISK MANAGEMENT
+# CALL OPTION RISK MANAGEMENT
 # ============================================
 RISK_REWARD_RATIO = 3
+
+# Time decay management
+DAYS_TO_EXPIRY_MIN = 3  # Don't trade if expiry < 3 days
+DAYS_TO_EXPIRY_MAX = 10 # Don't trade if expiry > 10 days
+
+# Take profit: Exit when option value increases by X%
+CALL_OPTION_PROFIT_TARGET_PCT = 50  # Exit at 50% profit
+
+# Stop loss: Exit when option value decreases by X%
+CALL_OPTION_STOP_LOSS_PCT = 30  # Exit at 30% loss
 
 # ============================================
 # MARKET HOURS (IST)
@@ -51,8 +72,8 @@ TELEGRAM_CHAT_ID = "your_chat_id"
 # LOGGING
 # ============================================
 LOG_LEVEL = "INFO"
-LOG_FILE = "logs/trading_bot.log"
-TRADE_LOG_FILE = "logs/trades.csv"
+LOG_FILE = "logs/trading_bot_options.log"
+TRADE_LOG_FILE = "logs/option_trades.csv"
 
 # ============================================
 # GENERAL SETTINGS
@@ -63,3 +84,9 @@ RECONNECT_DELAY = 5
 TRADE_DAYS = [0, 1, 2, 3, 4]  # Monday to Friday
 MAX_ACTIVE_TRADES = 2
 PAPER_TRADING = False
+
+# ============================================
+# CAPITAL MANAGEMENT
+# ============================================
+INITIAL_CAPITAL = 200000  # ₹2,00,000 for 1-week test
+RISK_PER_TRADE = 30000   # Max ₹30,000 per trade (15% of capital)
